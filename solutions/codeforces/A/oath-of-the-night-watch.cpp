@@ -10,8 +10,10 @@
  */
 #include <iostream> 
 #include <algorithm>
+#include <map>
+#include <vector>
 
-using namespace std; 
+using namespace std;
 
 int main () { 
 
@@ -23,7 +25,6 @@ int main () {
         freopen("./output.txt", "w", stdout);
     #endif
 
-
     unsigned int n = 0; cin >> n;
 
     if (n == 2) {
@@ -31,38 +32,36 @@ int main () {
         return 0;
     }
 
-    unsigned long data[n];
+    /*
+     * Map Contains all the numbers (numbers)
+     * Key   => The number
+     * Value => How many times the number is repeated
+     */
+    map<unsigned long, unsigned int> numbers;
 
-    for (unsigned int i = 0; i < n; ++i) cin >> data[i];
+    unsigned int 
+    smallest = 0,
+    biggest = 0;
 
-    sort(data, data+n);
+    for (unsigned int i = 0; i < n; ++i) {
+        unsigned long num = 0; cin >> num;
+        
+        ++numbers[num]; // iterate repeation number for this num
+        
+        // Get the biggest and the smallest number
+        if (i == 0) {
+            smallest = num;
+            biggest  = num;
+        }
+
+        if (num < smallest) smallest = num;
+        else if (num > biggest) biggest  = num;
+    }
 
     unsigned int counter = 0;
-    for (unsigned int i = 1; i < n-1; ++i) { // We don't need the first one and the last one
-        // Note: Sorted Array maybe contains more than one same element if the number is repeated twice or more
-        
-        bool smaller = false;
-        if (data[i] == data[i-1]) { // Check if there is smaller number than this (Not all the previous ones are equal)
-            for (int j = i-1; j >= 0; --j) {
-                if (data[i] != data[j]) {
-                    smaller = true;
-                    break;
-                }
-            }
-        }
-        else smaller = true;
-        
-        if (!smaller) continue; // If there is smaller number than this one complete your process
-        
-        if (data[i] == data[i+1]) { // Check if there is bigger number than this (Not all the next ones are equal)
-            for (unsigned int j = i+1; j < n; ++j) {
-                if (data[i] < data[j]) {
-                    ++counter;
-                    break;
-                }
-            }
-        }
-        else ++counter; // Number is bigger
+    for (auto const &data : numbers) {
+        if (data.first == smallest || data.first == biggest) continue; // We don't need the first and the last number (There is no smaller num than the smallest one and same for the bigest)
+        counter += data.second;
     }
 
     cout << counter;
