@@ -9,40 +9,30 @@
 #include <iostream>
 #include <algorithm>
 
-using namespace std; 
+using namespace std;
 
-int main () { 
+int main () {
 
     ios_base::sync_with_stdio(0);
-    cin.tie(NULL); 
- 
+    cin.tie(NULL); cout.tie(NULL);
+
     #ifndef ONLINE_JUDGE
         freopen("./input.txt", "r", stdin);
         freopen("./output.txt", "w", stdout);
     #endif
 
-    unsigned short int n;
+    unsigned int n;
     cin >> n;
 
-    unsigned int nums[n];
-    unsigned int min = 0;
-    
-    for (unsigned short int i = 0; i < n; ++i) {
-        cin >> nums[i];
-        if (i == 0 || nums[i] < min) min = nums[i];
+    unsigned int smallest = 0, largest = 0;
+    for (unsigned int i = 1; i <= n; ++i) {
+        unsigned int num; cin >> num;
+        if (i == 1) smallest = num;
+        smallest = min(smallest, num);
+        largest = max(largest, num);
     }
 
-    sort(nums, nums+n);
-    
-    unsigned long long total = 0;
-    for (unsigned int i = 1; i < n; ++i) {
-        if (nums[i] != min+1) {
-            total += nums[i] - min + 1 - 2;
-        }
-        min = nums[i];
-    }
-
-    cout << total;
+    cout << largest - smallest + 1 - n;
 
     return 0;
 }
