@@ -7,6 +7,7 @@
  * Created Date : 2021-03-09 14:59:24
  */
 #include <iostream>
+#include <cmath>
 
 using namespace std;
 
@@ -32,12 +33,7 @@ int main () {
 
     unsigned int remainder = s % n;
     
-    unsigned int i = 0;
-    while (s >= n) {
-        s -= n;
-        ++i;
-    }
-
+    unsigned int i = floor(s/n);
     if (remainder == 0) cout << i;
     else cout << i + 1;
 
