@@ -25,17 +25,18 @@ int main () {
     unsigned long long s;
 
     cin >> n >> s;
-
-    if (n >= s) {
-        cout << 1;
+    
+    if (n == 1) {
+        cout << s;
         return 0;
     }
-
-    unsigned int remainder = s % n;
     
-    unsigned int i = floor(s/n);
-    if (remainder == 0) cout << i;
-    else cout << i + 1;
+    cout << fixed;
+
+    s = ceil((double)s/n);
+    
+    cout << s;
+
 
     return 0;
 }
